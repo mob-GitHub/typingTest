@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<head>
+    <title>げーーむ</title>
+</head>
+<body>
+    <p id="typing"></p>
+    <button id="button">すすめる。</button>
+    <script>
+        const buffer = document.getElementById('typing');
+
+        function typing(str = "") {
+            //書き込み済みの文字数を取得
+            let writed = buffer.innerHTML.length;
+            let write = "";
+
+            if (writed < str.length) {
+                //1文字だけ取得する
+                write = str.charAt(writed);
+            } else {
+                return 0;
+            }
+
+            //1文字だけ追加していく
+            buffer.innerHTML = buffer.innerHTML + write;
+        }
+        
+        // 表示するメッセージ本文
+        const message = [
+            "吾輩はねこである。名前はまだない。にゃーにゃー。",
+            "ああああああああああああああああああああああああ",
+            "いいいいいいいいいいいいいいいいいいいいいいいい"
+        ];
+        
+        // 1文字が表示される時間
+        const delay = 100;
+
+        let messageId = 0;
+
+        document.getElementById('button').addEventListener('click', (event) => {
+            if (messageId > 2) {
+                // 表示リセット
+                messageId = 0;
+            } else {
+                buffer.innerHTML = '';
+                const typingProcess = window.setInterval(() => {
+                    const result = typing(message[messageId]);
+                    if (result == 0) {
+                        window.clearInterval(typingProcess);
+                        messageId++;
+                    }
+                }, delay);
+            }
+        });
+    </script>
+</body>
+</html>
